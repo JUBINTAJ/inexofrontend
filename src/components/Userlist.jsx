@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '../api/axiosInterceptor';
 
 export default function UsersList() {
-  const fetchAllUsers = async () => {
-    const res = await axiosInstance.get('/admin/allusers');
-    console.log(res.data.data.users);
-    return res.data.data.users;
-  };
+  const queryClient = useQueryClient();
 
-  const { data: users = [], isLoading, error } = useQuery({
-    queryKey: ['allUsers'],
-    queryFn: fetchAllUsers,
+  const {data:users=[]} = useQuery({
+    queryFn: async () => {
+      const res = await axiosInstance.get("/admin/allusers");
+      return res.data.data.users;
+    },
+    queryKey:['users']
   });
 
 
