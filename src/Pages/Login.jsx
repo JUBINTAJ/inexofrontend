@@ -28,8 +28,7 @@ const Login = () => {
       }
     },
     onError: () => {
-      const { message } = error;
-      toast.error(message);
+      toast.error('user not fond');
     },
   });
   const handleLogin = (e) => {
