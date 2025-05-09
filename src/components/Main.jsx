@@ -63,33 +63,8 @@ export default function UserComplaintsPage() {
   const closedCount = complaints.filter((c) => c.status === "closed").length;
   const excludedCount = complaints.filter((c) => c.status === "excluded").length;
 
-  if (isLoading) return <div className="text-center py-10">
-        <div className="flex justify-end mb-4">
-  <button
-    onClick={() => nav('/Login') 
-     
-    }
-    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-  >
-    Login
-  </button>
-</div>
-    Loading complaints...
-    
-    </div>;
-  if (error) return <div className="text-center text-red-500 py-10">
-        <div className="flex justify-end mb-4">
-  <button
-    onClick={() => nav('/Login') 
-     
-    }
-    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-  >
-    Login
-  </button>
-</div>
-    Failed to load complaints.</div>;
 
+  
   return (
     <div className="max-w-7xl mx-auto py-10 px-4">
       <div className="flex justify-end mb-4">
