@@ -12,7 +12,6 @@ const Login = () => {
   const mutatation = useMutation({
     mutationFn: async (value) => {
       const res = await axiosInstance.post("/user/login", value);
-      console.log(res.data);
       return res.data;
     },
     onSuccess: (data) => {

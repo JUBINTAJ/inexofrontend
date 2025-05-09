@@ -64,7 +64,7 @@ export default function UserComplaintsPage() {
   const excludedCount = complaints.filter((c) => c.status === "excluded").length;
 
 
-  
+
   return (
     <div className="max-w-7xl mx-auto py-10 px-4">
       <div className="flex justify-end mb-4">
@@ -79,8 +79,8 @@ export default function UserComplaintsPage() {
 </div>
 
       <div className="bg-white p-6 rounded shadow mb-6">
-        <h2 className="text-2xl font-bold mb-2">My Complaints</h2>
-        <p className="text-gray-600 mb-6">Overview of your submitted complaints</p>
+        <h2 className="text-2xl font-bold mb-2">My Remarks</h2>
+        <p className="text-gray-600 mb-6">Overview of your submitted Remarks</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-yellow-100 text-yellow-800 p-4 rounded shadow">
@@ -99,7 +99,7 @@ export default function UserComplaintsPage() {
       </div>
 
       <div className="bg-white p-6 rounded shadow">
-        <h2 className="text-xl font-semibold mb-4">All Complaints</h2>
+        <h2 className="text-xl font-semibold mb-4">All Remarks</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto border">
             <thead className="bg-gray-100">
@@ -134,7 +134,7 @@ export default function UserComplaintsPage() {
       {isDialogOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-white/30">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-            <h3 className="text-xl font-semibold mb-4">Edit Complaint</h3>
+            <h3 className="text-xl font-semibold mb-4">Edit Remarks</h3>
 
             <div className="mb-4">
               <label className="block font-medium mb-1">Title</label>
