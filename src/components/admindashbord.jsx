@@ -11,7 +11,7 @@ export default function Dashboard() {
 
     const logoutMutation = useMutation({
     mutationFn: async (userdata) => {
-      const res= await axiosInstance.post("user/logout",userdata);
+      const res= await axiosInstance.post("/user/logout",userdata);
       return res.data
     },
     onSuccess: (data) => {
