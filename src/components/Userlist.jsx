@@ -17,8 +17,8 @@ export default function UsersList() {
 
   
 
-  if (isLoading) return <p className="text-center mt-10">Loading...</p>;
-  if (error) return <p className="text-center mt-10 text-red-500">Error fetching users</p>;
+  // if (isLoading) return <p className="text-center mt-10">Loading...</p>;
+  // if (error) return <p className="text-center mt-10 text-red-500">Error fetching users</p>;
 
   return (
     <div className="flex justify-center items-center space-y-6">
