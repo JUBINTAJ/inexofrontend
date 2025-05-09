@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../api/axiosInterceptor";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const fetchUserComplaints = async () => {
   const res = await axiosInstance.get("/user/complaints");
@@ -63,6 +64,26 @@ export default function UserComplaintsPage() {
   const closedCount = complaints.filter((c) => c.status === "closed").length;
   const excludedCount = complaints.filter((c) => c.status === "excluded").length;
 
+  const logoutMutation = useMutation({
+    mutationFn: async (userdata) => {
+      const res= await axiosInstance.post("/user/logout",userdata);
+      return res.data
+    },
+    onSuccess: (data) => {
+      toast.success("Logout successful!");
+      localStorage.clear(); 
+      setTimeout(() => {
+        navigate("/Login");
+      }, 1000);
+    },
+    onError: () => {
+      toast.error("Logout failed. Please try again.");
+    },
+  });
+
+    const handleLogout = () => {
+    logoutMutation.mutate();
+  };
 
   
 
@@ -78,9 +99,7 @@ export default function UserComplaintsPage() {
     Login
   </button>:
   <button
-    onClick={() => nav('/Login') 
-     
-    }
+    onClick={handleLogout}
     className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
   >
     Logout
