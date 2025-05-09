@@ -23,7 +23,8 @@ const Login = () => {
         nav("/Admin");
       } else {
         localStorage.setItem("role", user.role);
-        console.log(user.role);
+        localStorage.setItem("token", user.token);
+        console.log(user.token);
         nav("/");
       }
     },
