@@ -3,6 +3,7 @@ import { Users, ClipboardList } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from '../api/axiosInterceptor';
+import { toast } from 'react-toastify';
 
 export default function Dashboard() {
   const navigate = useNavigate();
