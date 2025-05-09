@@ -143,9 +143,9 @@ const handlecloseedit=()=>{
             <tbody className="divide-y divide-gray-200 bg-white">
               {usersLoading ? (
                 <tr>
-                  {/* <td colSpan={3} className="px-6 py-4 text-center text-sm text-gray-500">
+                  <td colSpan={3} className="px-6 py-4 text-center text-sm text-gray-500">
                     Loading users...
-                  </td> */}
+                  </td>
                 </tr>
               ) : users.length > 0 ? (
                 users.map((user) => (
