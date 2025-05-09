@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../api/axiosInterceptor";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const fetchUserComplaints = async () => {
   const res = await axiosInstance.get("/user/complaints");
@@ -58,23 +59,48 @@ export default function UserComplaintsPage() {
       },
     });
   };
+  
+    const logoutMutation = useMutation({
+      mutationFn: async (userdata) => {
+        const res= await axiosInstance.post("/user/logout",userdata);
+        return res.data
+      },
+      onSuccess: (data) => {
+        toast.success("Logout successful!");
+        localStorage.clear(); 
+        setTimeout(() => {
+          navigate("/Login");
+        }, 1000);
+      },
+      onError: () => {
+        toast.error("Logout failed. Please try again.");
+      },
+    });
+  
+      const handleLogout = () => {
+      logoutMutation.mutate();
+    };
 
   const pendingCount = complaints.filter((c) => c.status === "pending").length;
   const closedCount = complaints.filter((c) => c.status === "closed").length;
   const excludedCount = complaints.filter((c) => c.status === "excluded").length;
 
 
-
   return (
     <div className="max-w-7xl mx-auto py-10 px-4">
-      <div className="flex justify-end mb-4">
+  <div className="flex justify-end space-x-4 mb-4">
   <button
-    onClick={() => nav('/Login') 
-     
-    }
+    onClick={() => nav('/Login')}
     className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
   >
     Login
+  </button>
+
+  <button
+    onClick={handleLogout}
+    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+  >
+    Logout
   </button>
 </div>
 
