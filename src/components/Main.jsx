@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../api/axiosInterceptor";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const fetchUserComplaints = async () => {
   const res = await axiosInstance.get("/user/complaints");
@@ -64,48 +63,19 @@ export default function UserComplaintsPage() {
   const closedCount = complaints.filter((c) => c.status === "closed").length;
   const excludedCount = complaints.filter((c) => c.status === "excluded").length;
 
-  const logoutMutation = useMutation({
-    mutationFn: async (userdata) => {
-      const res= await axiosInstance.post("/user/logout",userdata);
-      return res.data
-    },
-    onSuccess: (data) => {
-      toast.success("Logout successful!");
-      localStorage.clear(); 
-      setTimeout(() => {
-        navigate("/Login");
-      }, 1000);
-    },
-    onError: () => {
-      toast.error("Logout failed. Please try again.");
-    },
-  });
 
-    const handleLogout = () => {
-    logoutMutation.mutate();
-  };
-
-  
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4">
       <div className="flex justify-end mb-4">
-{ !complaints? <button
+  <button
     onClick={() => nav('/Login') 
      
     }
     className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
   >
     Login
-  </button>:
-  <button
-    onClick={handleLogout}
-    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-  >
-    Logout
   </button>
-
-  }
 </div>
 
       <div className="bg-white p-6 rounded shadow mb-6">
@@ -164,7 +134,7 @@ export default function UserComplaintsPage() {
       {isDialogOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-white/30">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-            <h3 className="text-xl font-semibold mb-4">Edit Remarks</h3>
+            <h3 className="text-xl font-semibold mb-4">Edit Complaint</h3>
 
             <div className="mb-4">
               <label className="block font-medium mb-1">Title</label>
