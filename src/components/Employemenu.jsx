@@ -29,15 +29,13 @@ export default function EmploymentForm() {
     enabled: !!selectedUser,
   });
 
-  
   const createComplaint = useMutation({
-    mutationFn: async ({ title, description, userId,  }) => {
+    mutationFn: async ({ title, description, userId }) => {
       const res = await axiosInstance.put(`/admin/complaints/${userId}/assign`, {
         title,
         description,
         userId,
       });
-      console.log(res.data.complaint,'loo');
       return res.data;
     },
     onSuccess: () => {
@@ -47,23 +45,17 @@ export default function EmploymentForm() {
       setDescription('');
     },
     onError: (err) => {
-      console.error(err);
       toast.error('Error updating complaint');
     },
   });
-  
-
 
   const editComplaint = useMutation({
-    mutationFn: async ({ title, description, complaintId,assignedTo    }) => {
-        console.log(assignedTo ,',loo');
+    mutationFn: async ({ title, description, complaintId }) => {
       const res = await axiosInstance.put(`/admin/complaints/${complaintId}`, {
         complaintId,
         title,
         description,
       });
-
-      console.log(res.data,'kkkk');
       return res.data;
     },
     onSuccess: () => {
@@ -73,8 +65,8 @@ export default function EmploymentForm() {
       setDescription('');
     },
     onError: (err) => {
-        const {message}=err;
-        toast.error(message); 
+      const { message } = err;
+      toast.error(message);
     },
   });
 
@@ -86,13 +78,12 @@ export default function EmploymentForm() {
     setSelectedUser(null);
     setTitle('');
     setDescription('');
-};
+  };
 
-const handlecloseedit=()=>{
+  const handlecloseedit = () => {
     setModalType(null);
-      setEditComplaintId(null);
-
-  }
+    setEditComplaintId(null);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -119,7 +110,7 @@ const handlecloseedit=()=>{
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-6 px-40">
+    <div className="flex flex-col items-center justify-center min-h-screen space-y-6 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-40">
       <div className="mb-6 text-center">
         <h1 className="text-2xl font-bold text-gray-900">Employment Menu</h1>
       </div>
@@ -130,7 +121,7 @@ const handlecloseedit=()=>{
         </Link>
       </div>
 
-      <div className="rounded-lg border border-gray-200 bg-white shadow-sm w-full">
+      <div className="rounded-lg border border-gray-200 bg-white shadow-sm w-full max-w-5xl overflow-x-auto">
         <div className="p-6">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -179,8 +170,8 @@ const handlecloseedit=()=>{
       </div>
 
       {selectedUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-white/30">
-          <div className="bg-white rounded-xl shadow-lg p-6 w-[600px] max-h-[80vh] overflow-y-auto relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-white/30 px-4">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-3xl max-h-[80vh] overflow-y-auto relative">
             <button
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
               onClick={handleCloseModal}
@@ -231,8 +222,8 @@ const handlecloseedit=()=>{
       )}
 
       {modalType && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40">
-          <div className="bg-white p-6 rounded-lg shadow-md w-[400px] relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40 px-4">
+          <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg relative">
             <button
               onClick={handlecloseedit}
               className="absolute top-3 right-3 text-gray-500 hover:text-black"
