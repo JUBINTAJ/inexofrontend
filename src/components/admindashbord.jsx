@@ -5,13 +5,36 @@ import { Link } from 'react-router-dom';
 export default function Dashboard() {
   const navigate = useNavigate();
 
+
+    const logoutMutation = useMutation({
+    mutationFn: async (userdata) => {
+      const res= await axiosInstance.post("user/logout",userdata);
+      return res.data
+    },
+    onSuccess: (data) => {
+      toast.success("Logout successful!");
+      localStorage.clear(); 
+      setTimeout(() => {
+        navigate("/Login");
+      }, 1000);
+    },
+    onError: () => {
+      toast.error("Logout failed. Please try again.");
+    },
+  });
+
+    const handleLogout = () => {
+    logoutMutation.mutate();
+  };
+
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
       <button
-        onClick={() => navigate('/Login')}
+        onClick={handleLogout}
         className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
       >
-        Login
+        Logout
       </button>
 
       <div className="mb-6 text-center">
