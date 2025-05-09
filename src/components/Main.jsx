@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../api/axiosInterceptor";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const fetchUserComplaints = async () => {
   const res = await axiosInstance.get("/user/complaints");
@@ -11,13 +10,19 @@ const fetchUserComplaints = async () => {
 
 const updateComplaint = async ({ id, updatedData }) => {
   const res = await axiosInstance.put(`/user/complaints/${id}`, updatedData);
+  console.log(res.data);
   return res.data;
 };
 
 export default function UserComplaintsPage() {
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editData, setEditData] = useState({ _id: "", title: "", description: "", status: "" });
-  const navigate = useNavigate();
+  const [editData, setEditData] = useState({ _id: "", title: "", description: "" ,status:""});
+  const nav=useNavigate()
+
+
+
+
 
   const queryClient = useQueryClient();
   const { data: complaints = [], isLoading, error } = useQuery({
@@ -32,6 +37,7 @@ export default function UserComplaintsPage() {
       setIsDialogOpen(false);
     },
   });
+
 
   const handleEditClick = (complaint) => {
     setEditData(complaint);
@@ -48,7 +54,7 @@ export default function UserComplaintsPage() {
       updatedData: {
         title: editData.title,
         description: editData.description,
-        status: editData.status,
+        status : editData.status,
       },
     });
   };
@@ -57,46 +63,21 @@ export default function UserComplaintsPage() {
   const closedCount = complaints.filter((c) => c.status === "closed").length;
   const excludedCount = complaints.filter((c) => c.status === "excluded").length;
 
-  const logoutMutation = useMutation({
-    mutationFn: async () => {
-      const res = await axiosInstance.post("user/logout");
-      return res.data;
-    },
-    onSuccess: () => {
-      toast.success("Logout successful!");
-      localStorage.clear();
-      setTimeout(() => {
-        navigate("/Login");
-      }, 1000);
-    },
-    onError: () => {
-      toast.error("Logout failed. Please try again.");
-    },
-  });
 
-  const handleLogout = () => {
-    logoutMutation.mutate({});
-  };
+  
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4">
       <div className="flex justify-end mb-4">
-        {localStorage.getItem("token") ? (
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-          >
-            Logout
-          </button>
-        ) : (
-          <button
-            onClick={() => navigate('/Login')}
-            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-          >
-            Login
-          </button>
-        )}
-      </div>
+  <button
+    onClick={() => nav('/Login') 
+     
+    }
+    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+  >
+    Login
+  </button>
+</div>
 
       <div className="bg-white p-6 rounded shadow mb-6">
         <h2 className="text-2xl font-bold mb-2">My Remarks</h2>

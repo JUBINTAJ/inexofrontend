@@ -17,11 +17,13 @@ const Login = () => {
     onSuccess: (data) => {
       const { message, user } = data;
       toast.success(message);
+
       if (user.role === "admin") {
         localStorage.setItem("role", user.role);
         nav("/Admin");
       } else {
         localStorage.setItem("role", user.role);
+        console.log(user.role);
         nav("/");
       }
     },
