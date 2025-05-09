@@ -12,18 +12,19 @@ const Login = () => {
   const mutatation = useMutation({
     mutationFn: async (value) => {
       const res = await axiosInstance.post("/user/login", value);
+      console.log(res.data);
       return res.data;
     },
     onSuccess: (data) => {
       const { message, user } = data;
       toast.success(message);
-
+localStorage.setItem('token',token)
+console.log(token);
       if (user.role === "admin") {
         localStorage.setItem("role", user.role);
         nav("/Admin");
       } else {
         localStorage.setItem("role", user.role);
-        console.log(user.token);
         nav("/");
       }
     },
