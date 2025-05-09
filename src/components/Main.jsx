@@ -69,14 +69,24 @@ export default function UserComplaintsPage() {
   return (
     <div className="max-w-7xl mx-auto py-10 px-4">
       <div className="flex justify-end mb-4">
-  <button
+{ !complaints? <button
     onClick={() => nav('/Login') 
      
     }
     className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
   >
     Login
+  </button>:
+  <button
+    onClick={() => nav('/Login') 
+     
+    }
+    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+  >
+    Logout
   </button>
+
+  }
 </div>
 
       <div className="bg-white p-6 rounded shadow mb-6">
