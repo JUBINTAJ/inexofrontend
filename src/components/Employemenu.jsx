@@ -39,7 +39,7 @@ export default function EmploymentForm() {
       return res.data;
     },
     onSuccess: () => {
-      toast.success('Complaint updated/assigned!');
+      toast.success('Complaint assigned!');
       setModalType(null);
       setTitle('');
       setDescription('');
