@@ -12,6 +12,23 @@ export default function EmploymentForm() {
   const [description, setDescription] = useState('');
   const [editComplaintId, setEditComplaintId] = useState(null);
 
+  const { data: users = [], isLoading: usersLoading,refetch } = useQuery({
+    queryKey: ['allUsers'],
+    queryFn: async () => {
+      const res = await axiosInstance.get('/admin/allusers');
+      return res.data.data.users;
+    },
+  });
+
+  const { data: complaints = [], isLoading: complaintsLoading } = useQuery({
+    queryKey: ['userComplaints', selectedUser?._id],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/admin/complaints/${selectedUser._id}`);
+      return res.data.complaint;
+    },
+    enabled: !!selectedUser,
+  });
+
   const createComplaint = useMutation({
     mutationFn: async ({ title, description, userId }) => {
       const res = await axiosInstance.put(`/admin/complaints/${userId}/assign`, {
@@ -26,6 +43,7 @@ export default function EmploymentForm() {
       setModalType(null);
       setTitle('');
       setDescription('');
+      refetch();
     },
     onError: (err) => {
       toast.error('Error updating complaint');
@@ -46,29 +64,13 @@ export default function EmploymentForm() {
       setModalType(null);
       setTitle('');
       setDescription('');
+      refetch();
     },
     onError: (err) => {
       const { message } = err;
       toast.error(message);
     },
   });
-  const { data: users = [], isLoading: usersLoading } = useQuery({
-    queryKey: ['allUsers'],
-    queryFn: async () => {
-      const res = await axiosInstance.get('/admin/allusers');
-      return res.data.data.users;
-    },
-  });
-
-  const { data: complaints = [], isLoading: complaintsLoading } = useQuery({
-    queryKey: ['userComplaints',createComplaint,editComplaint, selectedUser?._id],
-    queryFn: async () => {
-      const res = await axiosInstance.get(`/admin/complaints/${selectedUser._id}`);
-      return res.data.complaint;
-    },
-    enabled: !!selectedUser,
-  });
-
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
