@@ -64,18 +64,50 @@ export default function UserComplaintsPage() {
   const excludedCount = complaints.filter((c) => c.status === "excluded").length;
 
 
+    const logoutMutation = useMutation({
+    mutationFn: async (userdata) => {
+      const res= await axiosInstance.post("user/logout",userdata);
+      return res.data
+    },
+    onSuccess: (data) => {
+      toast.success("Logout successful!");
+      localStorage.clear(); 
+      setTimeout(() => {
+        navigate("/Login");
+      }, 1000);
+    },
+    onError: () => {
+      toast.error("Logout failed. Please try again.");
+    },
+  });
+
+
+  
+  const handleLogout = () => {
+    logoutMutation.mutate();
+  };
+
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4">
-      <div className="flex justify-end mb-4">
-  <button
-    onClick={() => nav('/Login') 
-     
-    }
-    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-  >
-    Login
-  </button>
+<div className="flex justify-end mb-4">
+  {
+    localStorage.getItem("token") ? (
+      <button
+        onClick={handleLogout}
+        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+      >
+        Logout
+      </button>
+    ) : (
+      <button
+        onClick={() => nav('/Login')}
+        className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+      >
+        Login
+      </button>
+    )
+  }
 </div>
 
       <div className="bg-white p-6 rounded shadow mb-6">
