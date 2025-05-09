@@ -69,7 +69,7 @@ export default function UserComplaintsPage() {
         toast.success("Logout successful!");
         localStorage.clear(); 
         setTimeout(() => {
-          navigate("/Login");
+          nav("/Login");
         }, 1000);
       },
       onError: () => {
